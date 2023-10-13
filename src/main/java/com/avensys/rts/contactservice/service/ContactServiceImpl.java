@@ -70,7 +70,7 @@ public class ContactServiceImpl implements ContactService {
 
         //Set Address
         MailingAddressDTO addressRequest = contactRequest.getMailingAddress();
-        AddressRequestDTO addressRequestDTO = contactRequestToAddressRequest(addressRequest, 0, "job", savedContact.getId());
+        AddressRequestDTO addressRequestDTO = contactRequestToAddressRequest(addressRequest, 0, contactRequest.getEntityType(), savedContact.getId());
         HttpResponse mailAddressResponse = addressAPIClient.createAddress(addressRequestDTO);
         AddressResponseDTO mailAddressData = MappingUtil.mapClientBodyToClass(mailAddressResponse.getData(), AddressResponseDTO.class);
         savedContact.setAddress(mailAddressData.getId());
@@ -249,6 +249,9 @@ public class ContactServiceImpl implements ContactService {
      */
     private ContactResponseDTO contactEntityToContactResponseDTO(ContactEntity contactEntity) {
         ContactResponseDTO contactResponseDTO = new ContactResponseDTO();
+
+        // Set contact id
+        contactResponseDTO.setId(contactEntity.getId());
 
         // Get contact information
         ContactInformationResponseDTO contactInformation = new ContactInformationResponseDTO();

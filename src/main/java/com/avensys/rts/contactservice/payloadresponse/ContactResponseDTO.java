@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ContactResponseDTO {
+    private Integer id;
     private ContactInformationResponseDTO contactInformation;
     private MailingAddressResponseDTO mailingAddress;
     private String contactRemarks;

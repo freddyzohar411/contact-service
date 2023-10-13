@@ -16,11 +16,11 @@ import org.hibernate.validator.constraints.Length;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@ValidatePhoneNumber
+//@ValidatePhoneNumber
 public class ContactInformationDTO {
 
     @NotEmpty
-    @ValidateString(acceptedValues = {"Mr", "Mrs", "Ms"}, message = "Title must be either Mr, Mrs or Ms")
+    @ValidateString(acceptedValues = {"Mr", "Mrs", "Ms", "Miss"}, message = "Title must be either Mr, Mrs or Ms")
     @Length(max = 5)
     private String title;
 
@@ -32,16 +32,16 @@ public class ContactInformationDTO {
     @Length(max = 50)
     private String lastName;
 
-    @Length(max = 20)
+    @Length(max = 30)
     private String designation;
 
-    @Length(max = 20)
+    @Length(max = 30)
     private String department;
 
-    @Length(max = 20)
+    @Length(max = 30)
     private String industry;
 
-    @Length(max = 20)
+    @Length(max = 30)
     private String subIndustry;
 
     private Integer mobileCountry;

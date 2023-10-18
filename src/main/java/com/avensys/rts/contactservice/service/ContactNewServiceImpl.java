@@ -51,8 +51,9 @@ public class ContactNewServiceImpl implements ContactNewService {
 
         // Save form data to form submission microservice
         FormSubmissionsRequestDTO formSubmissionsRequestDTO = new FormSubmissionsRequestDTO();
+        formSubmissionsRequestDTO.setUserId(getUserId());
         formSubmissionsRequestDTO.setFormId(contactNewRequestDTO.getFormId());
-        formSubmissionsRequestDTO.setSubmissionData(contactNewRequestDTO.getFormData());
+        formSubmissionsRequestDTO.setSubmissionData(MappingUtil.convertJSONStringToJsonNode(contactNewRequestDTO.getFormData()));
         formSubmissionsRequestDTO.setEntityId(savedContactEntity.getId());
         formSubmissionsRequestDTO.setEntityType(contactNewRequestDTO.getEntityType());
         HttpResponse formSubmissionResponse = formSubmissionAPIClient.addFormSubmission(formSubmissionsRequestDTO);
@@ -81,8 +82,9 @@ public class ContactNewServiceImpl implements ContactNewService {
 
         // Update form submission
         FormSubmissionsRequestDTO formSubmissionsRequestDTO = new FormSubmissionsRequestDTO();
+        formSubmissionsRequestDTO.setUserId(getUserId());
         formSubmissionsRequestDTO.setFormId(contactNewRequestDTO.getFormId());
-        formSubmissionsRequestDTO.setSubmissionData(contactNewRequestDTO.getFormData());
+        formSubmissionsRequestDTO.setSubmissionData(MappingUtil.convertJSONStringToJsonNode(contactNewRequestDTO.getFormData()));
         formSubmissionsRequestDTO.setEntityId(updatedContactEntity.getId());
         formSubmissionsRequestDTO.setEntityType(contactNewRequestDTO.getEntityType());
         HttpResponse formSubmissionResponse = formSubmissionAPIClient.updateFormSubmission(updatedContactEntity.getFormSubmissionId(), formSubmissionsRequestDTO);
@@ -108,6 +110,19 @@ public class ContactNewServiceImpl implements ContactNewService {
                 .map(this::contactNewEntityToContactNewResponseDTO)
                 .toList();
         return contactNewResponseDTOList;
+    }
+
+    @Override
+    @Transactional
+    public void deleteContactsByEntityTypeAndEntityId(String entityType, Integer entityId) {
+        List<ContactNewEntity> contactNewEntityList = contactNewRepository.findByEntityTypeAndEntityId(entityType, entityId);
+        if (!contactNewEntityList.isEmpty()) {
+            // Delete each contact form submission before deleting
+            contactNewEntityList.forEach(contactNewEntity -> {
+                formSubmissionAPIClient.deleteFormSubmission(contactNewEntity.getFormSubmissionId());
+                contactNewRepository.delete(contactNewEntity);
+            });
+        }
     }
 
 
@@ -141,7 +156,7 @@ public class ContactNewServiceImpl implements ContactNewService {
         // Get form submission data
         HttpResponse formSubmissionResponse = formSubmissionAPIClient.getFormSubmission(contactNewEntity.getFormSubmissionId());
         FormSubmissionsResponseDTO formSubmissionData = MappingUtil.mapClientBodyToClass(formSubmissionResponse.getData(), FormSubmissionsResponseDTO.class);
-        contactResponseDTO.setSubmissionData(formSubmissionData.getSubmissionData());
+        contactResponseDTO.setSubmissionData(MappingUtil.convertJsonNodeToJSONString(formSubmissionData.getSubmissionData()));
         return contactResponseDTO;
     }
 

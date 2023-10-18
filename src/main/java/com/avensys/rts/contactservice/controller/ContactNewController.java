@@ -56,4 +56,17 @@ public class ContactNewController {
         ContactNewResponseDTO updatedContact = contactService.updateContact(id, contactRequest);
         return ResponseUtil.generateSuccessResponse(updatedContact, HttpStatus.OK, messageSource.getMessage(MessageConstants.MESSAGE_SUCCESS, null, LocaleContextHolder.getLocale()));
     }
+
+    /**
+     * This endpoint is to delete contacts by entity type and entity id
+     * @param entityType
+     * @param entityId
+     * @return
+     */
+    @DeleteMapping("/contacts/entity/{entityType}/{entityId}")
+    public ResponseEntity<Object> deleteContactsByEntityTypeAndEntityId(@PathVariable String entityType, @PathVariable Integer entityId) {
+        log.info("Delete contacts by entity type and entity id : Controller ");
+        contactService.deleteContactsByEntityTypeAndEntityId(entityType, entityId);
+        return ResponseUtil.generateSuccessResponse(null, HttpStatus.OK, messageSource.getMessage(MessageConstants.MESSAGE_SUCCESS, null, LocaleContextHolder.getLocale()));
+    }
 }

@@ -17,4 +17,5 @@ public interface ContactNewService {
 
     List<ContactNewResponseDTO> getContactsByEntityTypeAndEntityId(String entityType, Integer entityId);
 
+    void deleteContactsByEntityTypeAndEntityId(String entityType, Integer entityId);
 }

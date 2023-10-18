@@ -22,7 +22,8 @@ import java.util.List;
  * @author Koh He Xiang
  * This class is used to define the endpoints for the Contact controller
  */
-@RestController
+//@RestController
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class ContactController {
 
     private final Logger log = LoggerFactory.getLogger(ContactController.class);

@@ -30,16 +30,16 @@ public class ContactEntity {
     @Column(name = "last_name", length = 50 )
     private String lastName;
 
-    @Column(name = "designation", length = 20 )
+    @Column(name = "designation", length = 30 )
     private String designation;
 
-    @Column(name = "department", length = 20 )
+    @Column(name = "department", length = 30 )
     private String department;
 
-    @Column(name = "industry", length = 20 )
+    @Column(name = "industry", length = 30 )
     private String industry;
 
-    @Column(name = "sub_industry", length = 20)
+    @Column(name = "sub_industry", length = 30)
     private String subIndustry;
 
     @Column(name = "mobile_country")

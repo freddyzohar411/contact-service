@@ -188,6 +188,7 @@ public class ContactNewServiceImpl implements ContactNewService {
         String email = JwtUtil.getEmailFromContext();
         HttpResponse userResponse = userAPIClient.getUserByEmail(email);
         UserResponseDTO userData = MappingUtil.mapClientBodyToClass(userResponse.getData(), UserResponseDTO.class);
-        return userData.getId();
+        return (userData.getId().intValue());
+//        return userData.getId();
     }
 }

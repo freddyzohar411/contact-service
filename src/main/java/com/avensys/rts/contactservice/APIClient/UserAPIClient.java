@@ -13,9 +13,6 @@ public interface UserAPIClient {
     @GetMapping("/{id}")
     HttpResponse getUserById(@PathVariable("id") Integer id);
 
-//    @GetMapping("")
-//    HttpResponse getUserByEmail(@RequestParam("email") String email);
-
     @GetMapping("/email/{email}")
     HttpResponse getUserByEmail(@PathVariable("email") String email);
 

@@ -1,6 +1,7 @@
 package com.avensys.rts.contactservice.payloadnewrequest;
 
 import com.fasterxml.jackson.databind.JsonNode;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,9 +10,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class FormSubmissionsRequestDTO {
-    private Integer formId;
-    private Integer userId;
-    private JsonNode submissionData;
-    private Integer entityId;
-    private String entityType;
+	private Integer formId;
+	private Long userId;
+	private JsonNode submissionData;
+	private Integer entityId;
+	private String entityType;
 }

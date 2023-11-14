@@ -1,6 +1,7 @@
 package com.avensys.rts.contactservice.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,12 +12,14 @@ import com.avensys.rts.contactservice.APIClient.FormSubmissionAPIClient;
 import com.avensys.rts.contactservice.APIClient.UserAPIClient;
 import com.avensys.rts.contactservice.customresponse.HttpResponse;
 import com.avensys.rts.contactservice.entity.ContactNewEntity;
+import com.avensys.rts.contactservice.entity.UserEntity;
 import com.avensys.rts.contactservice.payloadnewrequest.ContactNewRequestDTO;
 import com.avensys.rts.contactservice.payloadnewrequest.FormSubmissionsRequestDTO;
 import com.avensys.rts.contactservice.payloadnewresponse.ContactNewResponseDTO;
 import com.avensys.rts.contactservice.payloadnewresponse.FormSubmissionsResponseDTO;
 import com.avensys.rts.contactservice.payloadresponse.UserResponseDTO;
 import com.avensys.rts.contactservice.repository.ContactNewRepository;
+import com.avensys.rts.contactservice.repository.UserRepository;
 import com.avensys.rts.contactservice.util.JwtUtil;
 import com.avensys.rts.contactservice.util.MappingUtil;
 
@@ -32,6 +35,9 @@ public class ContactNewServiceImpl implements ContactNewService {
 
 	@Autowired
 	private UserAPIClient userAPIClient;
+
+	@Autowired
+	private UserRepository userRepository;
 
 	@Autowired
 	private FormSubmissionAPIClient formSubmissionAPIClient;
@@ -144,18 +150,17 @@ public class ContactNewServiceImpl implements ContactNewService {
 		contactResponseDTO.setFormSubmissionId(contactNewEntity.getFormSubmissionId());
 
 		// Get created by User data from user microservice
-		HttpResponse userResponse = userAPIClient.getUserById(contactNewEntity.getCreatedBy());
-		UserResponseDTO userData = MappingUtil.mapClientBodyToClass(userResponse.getData(), UserResponseDTO.class);
+		Optional<UserEntity> userEntity = userRepository.findById(contactNewEntity.getCreatedBy());
+		UserEntity userData = userEntity.get();
 		contactResponseDTO.setCreatedBy(userData.getFirstName() + " " + userData.getLastName());
 
 		// Get updated by user data from user microservice
 		if (contactNewEntity.getUpdatedBy() == contactNewEntity.getCreatedBy()) {
 			contactResponseDTO.setUpdatedBy(userData.getFirstName() + " " + userData.getLastName());
 		} else {
-			HttpResponse updatedByUserResponse = userAPIClient.getUserById(contactNewEntity.getUpdatedBy());
-			UserResponseDTO updatedByUserData = MappingUtil.mapClientBodyToClass(updatedByUserResponse.getData(),
-					UserResponseDTO.class);
-			contactResponseDTO.setUpdatedBy(updatedByUserData.getFirstName() + " " + updatedByUserData.getLastName());
+			userEntity = userRepository.findById(contactNewEntity.getUpdatedBy());
+			userData = userEntity.get();
+			contactResponseDTO.setUpdatedBy(userData.getFirstName() + " " + userData.getLastName());
 		}
 
 		// Get form submission data

@@ -1,33 +1,38 @@
 package com.avensys.rts.contactservice.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
+import lombok.Setter;
 
-import java.time.LocalDateTime;
-
-@Entity(name = "contactNew")
-@Table(name = "contact_new")
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ContactNewEntity {
+@Entity
+@Table(name = "contact_new")
+public class ContactNewEntity extends BaseEntity {
 
-    @Id
-    @GeneratedValue( strategy = GenerationType.IDENTITY)
-    private int id;
+	private static final long serialVersionUID = 4539091506101115672L;
 
-    @Column(name = "title", length = 5 )
-    private String title;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int id;
 
-    @Column(name = "first_name", length = 50 )
-    private String firstName;
+	@Column(name = "title", length = 5)
+	private String title;
 
-    @Column(name = "last_name", length = 50 )
-    private String lastName;
+	@Column(name = "first_name", length = 50)
+	private String firstName;
+
+	@Column(name = "last_name", length = 50)
+	private String lastName;
 
 //    @Column(name = "designation", length = 30 )
 //    private String designation;
@@ -62,30 +67,16 @@ public class ContactNewEntity {
 //    @Column(name = "remarks", length = 250)
 //    private String remarks;
 
-    @Column(name = "entity_id")
-    private int entityId;
+	@Column(name = "entity_id")
+	private int entityId;
 
-    @Column(name="entity_type", length = 30)
-    private String entityType;
+	@Column(name = "entity_type", length = 30)
+	private String entityType;
 
-    @Column (name = "created_by")
-    private Integer createdBy;
+	@Column(name = "form_id")
+	private Integer formId;
 
-    @CreationTimestamp
-    @Column (name = "created_at")
-    private LocalDateTime createdAt;
-
-    @Column (name = "updated_by")
-    private Integer updatedBy;
-
-    @UpdateTimestamp
-    @Column(name = "updated_at")
-    private LocalDateTime updatedAt;
-
-    @Column(name= "form_id")
-    private Integer formId;
-
-    @Column(name = "form_submission_id")
-    private Integer formSubmissionId;
+	@Column(name = "form_submission_id")
+	private Integer formSubmissionId;
 
 }

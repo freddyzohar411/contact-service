@@ -8,18 +8,16 @@ import com.avensys.rts.contactservice.payloadnewrequest.ContactNewRequestDTO;
 import com.avensys.rts.contactservice.payloadnewrequest.FormSubmissionsRequestDTO;
 import com.avensys.rts.contactservice.payloadnewresponse.ContactNewResponseDTO;
 import com.avensys.rts.contactservice.payloadnewresponse.FormSubmissionsResponseDTO;
-import com.avensys.rts.contactservice.payloadresponse.UserResponseDTO;
+import com.avensys.rts.contactservice.payloadnewresponse.UserResponseDTO;
 import com.avensys.rts.contactservice.repository.ContactNewRepository;
 import com.avensys.rts.contactservice.util.JwtUtil;
 import com.avensys.rts.contactservice.util.MappingUtil;
-import jakarta.persistence.Column;
 import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -189,6 +187,5 @@ public class ContactNewServiceImpl implements ContactNewService {
         HttpResponse userResponse = userAPIClient.getUserByEmail(email);
         UserResponseDTO userData = MappingUtil.mapClientBodyToClass(userResponse.getData(), UserResponseDTO.class);
         return (userData.getId().intValue());
-//        return userData.getId();
     }
 }

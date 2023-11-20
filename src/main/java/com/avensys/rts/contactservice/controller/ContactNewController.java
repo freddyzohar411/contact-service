@@ -3,10 +3,7 @@ package com.avensys.rts.contactservice.controller;
 import com.avensys.rts.contactservice.constant.MessageConstants;
 import com.avensys.rts.contactservice.payloadnewrequest.ContactNewRequestDTO;
 import com.avensys.rts.contactservice.payloadnewresponse.ContactNewResponseDTO;
-import com.avensys.rts.contactservice.payloadrequest.ContactRequestDTO;
-import com.avensys.rts.contactservice.payloadresponse.ContactResponseDTO;
 import com.avensys.rts.contactservice.service.ContactNewServiceImpl;
-import com.avensys.rts.contactservice.service.ContactServiceImpl;
 import com.avensys.rts.contactservice.util.ResponseUtil;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
@@ -21,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class ContactNewController {
 
-    private final Logger log = LoggerFactory.getLogger(ContactController.class);
+    private final Logger log = LoggerFactory.getLogger(ContactNewController.class);
     private final ContactNewServiceImpl contactService;
     private final MessageSource messageSource;
 

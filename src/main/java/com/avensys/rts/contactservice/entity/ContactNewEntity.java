@@ -29,39 +29,6 @@ public class ContactNewEntity {
     @Column(name = "last_name", length = 50 )
     private String lastName;
 
-//    @Column(name = "designation", length = 30 )
-//    private String designation;
-//
-//    @Column(name = "department", length = 30 )
-//    private String department;
-//
-//    @Column(name = "industry", length = 30 )
-//    private String industry;
-//
-//    @Column(name = "sub_industry", length = 30)
-//    private String subIndustry;
-//
-//    @Column(name = "mobile_country")
-//    private int mobileCountry;
-//
-//    @Column(name = "mobile_number")
-//    private int mobileNumber;
-//
-//    @Column(name = "landline_country")
-//    private int landlineCountry;
-//
-//    @Column(name = "landline_number")
-//    private int landlineNumber;
-//
-//    @Column(name = "email", length = 250)
-//    private String email;
-//
-//    @Column(name = "address")
-//    private Integer address;
-//
-//    @Column(name = "remarks", length = 250)
-//    private String remarks;
-
     @Column(name = "entity_id")
     private int entityId;
 

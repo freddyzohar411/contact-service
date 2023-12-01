@@ -23,7 +23,7 @@ public class ContactNewEntity extends BaseEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private Long id;
 
 	@Column(name = "title", length = 5)
 	private String title;
@@ -34,16 +34,16 @@ public class ContactNewEntity extends BaseEntity {
 	@Column(name = "last_name", length = 50)
 	private String lastName;
 
-    @Column(name = "entity_id")
-    private int entityId;
+	@Column(name = "entity_id")
+	private Long entityId;
 
 	@Column(name = "entity_type", length = 30)
 	private String entityType;
 
 	@Column(name = "form_id")
-	private Integer formId;
+	private Long formId;
 
 	@Column(name = "form_submission_id")
-	private Integer formSubmissionId;
+	private Long formSubmissionId;
 
 }

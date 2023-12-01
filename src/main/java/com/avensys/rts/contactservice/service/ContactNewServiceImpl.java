@@ -1,5 +1,12 @@
 package com.avensys.rts.contactservice.service;
 
+import java.util.List;
+import java.util.Optional;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.avensys.rts.contactservice.APIClient.FormSubmissionAPIClient;
 import com.avensys.rts.contactservice.APIClient.UserAPIClient;
@@ -15,15 +22,8 @@ import com.avensys.rts.contactservice.repository.ContactNewRepository;
 import com.avensys.rts.contactservice.repository.UserRepository;
 import com.avensys.rts.contactservice.util.JwtUtil;
 import com.avensys.rts.contactservice.util.MappingUtil;
+
 import jakarta.transaction.Transactional;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ContactNewServiceImpl implements ContactNewService {
@@ -198,11 +198,11 @@ public class ContactNewServiceImpl implements ContactNewService {
 		return contactNewRepository.save(contactNewEntity);
 	}
 
-    private Integer getUserId() {
-        String email = JwtUtil.getEmailFromContext();
-        HttpResponse userResponse = userAPIClient.getUserByEmail(email);
-        UserResponseDTO userData = MappingUtil.mapClientBodyToClass(userResponse.getData(), UserResponseDTO.class);
-        return (userData.getId().intValue());
-    }
+	private Integer getUserId() {
+		String email = JwtUtil.getEmailFromContext();
+		HttpResponse userResponse = userAPIClient.getUserByEmail(email);
+		UserResponseDTO userData = MappingUtil.mapClientBodyToClass(userResponse.getData(), UserResponseDTO.class);
+		return (userData.getId().intValue());
+	}
 
 }

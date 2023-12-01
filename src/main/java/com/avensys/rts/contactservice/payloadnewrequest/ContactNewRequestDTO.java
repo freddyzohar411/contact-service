@@ -13,11 +13,11 @@ public class ContactNewRequestDTO {
 	private String firstName;
 	private String lastName;
 	private String entityType;
-	private Integer entityId;
+	private Long entityId;
 
 	// Form Submission
 	private String formData;
-	private Integer formId;
+	private Long formId;
 
 	private Long createdBy;
 	private Long updatedBy;

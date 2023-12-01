@@ -10,17 +10,21 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ContactNewResponseDTO {
-	private Integer id;
+	private Long id;
 	private String title;
 	private String firstName;
 	private String lastName;
-	private Integer formId;
+	private Long formId;
 	private String submissionData;
-	private Integer formSubmissionId;
+	private Long formSubmissionId;
 	private String entityType;
-	private Integer entityId;
+	private Long entityId;
 	private String createdBy;
 	private String updatedBy;
 	private LocalDateTime createdAt;
 	private LocalDateTime updatedAt;
+
+	public String getFullName() {
+		return title + " " + firstName + " " + lastName;
+	}
 }

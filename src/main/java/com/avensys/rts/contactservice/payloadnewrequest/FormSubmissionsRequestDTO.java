@@ -10,9 +10,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class FormSubmissionsRequestDTO {
-	private Integer formId;
+	private Long formId;
 	private Long userId;
 	private JsonNode submissionData;
-	private Integer entityId;
+	private Long entityId;
 	private String entityType;
 }

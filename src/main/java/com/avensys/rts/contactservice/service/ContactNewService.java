@@ -7,15 +7,15 @@ import java.util.List;
 
 public interface ContactNewService {
 
-    ContactNewResponseDTO createContact(ContactNewRequestDTO contactNewRequestDTO);
+	ContactNewResponseDTO createContact(ContactNewRequestDTO contactNewRequestDTO);
 
-    ContactNewResponseDTO getContactById(Integer id);
+	ContactNewResponseDTO getContactById(Long id);
 
-    ContactNewResponseDTO updateContact(Integer id, ContactNewRequestDTO contactNewRequestDTO);
+	ContactNewResponseDTO updateContact(Long id, ContactNewRequestDTO contactNewRequestDTO);
 
-    void deleteContact(Integer id);
+	void deleteContact(Long id);
 
-    List<ContactNewResponseDTO> getContactsByEntityTypeAndEntityId(String entityType, Integer entityId);
+	List<ContactNewResponseDTO> getContactsByEntityTypeAndEntityId(String entityType, Integer entityId);
 
-    void deleteContactsByEntityTypeAndEntityId(String entityType, Integer entityId);
+	void deleteContactsByEntityTypeAndEntityId(String entityType, Integer entityId);
 }

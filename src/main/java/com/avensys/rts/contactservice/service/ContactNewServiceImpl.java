@@ -17,18 +17,14 @@ import com.avensys.rts.contactservice.payloadnewrequest.ContactNewRequestDTO;
 import com.avensys.rts.contactservice.payloadnewrequest.FormSubmissionsRequestDTO;
 import com.avensys.rts.contactservice.payloadnewresponse.ContactNewResponseDTO;
 import com.avensys.rts.contactservice.payloadnewresponse.FormSubmissionsResponseDTO;
-import com.avensys.rts.contactservice.payloadnewresponse.UserResponseDTO;
 import com.avensys.rts.contactservice.repository.ContactNewRepository;
 import com.avensys.rts.contactservice.repository.UserRepository;
-import com.avensys.rts.contactservice.util.JwtUtil;
 import com.avensys.rts.contactservice.util.MappingUtil;
 
 import jakarta.transaction.Transactional;
 
 @Service
 public class ContactNewServiceImpl implements ContactNewService {
-
-	private final String ACCOUNT_CONTACT_TYPE = "account_contact";
 
 	private final Logger log = LoggerFactory.getLogger(ContactNewServiceImpl.class);
 	private final ContactNewRepository contactNewRepository;
@@ -74,7 +70,7 @@ public class ContactNewServiceImpl implements ContactNewService {
 	}
 
 	@Override
-	public ContactNewResponseDTO getContactById(Integer id) {
+	public ContactNewResponseDTO getContactById(Long id) {
 		ContactNewEntity contactEntityFound = contactNewRepository.findById(id)
 				.orElseThrow(() -> new RuntimeException("Contact not found"));
 		return contactNewEntityToContactNewResponseDTO(contactEntityFound);
@@ -82,7 +78,7 @@ public class ContactNewServiceImpl implements ContactNewService {
 
 	@Override
 	@Transactional
-	public ContactNewResponseDTO updateContact(Integer id, ContactNewRequestDTO contactNewRequestDTO) {
+	public ContactNewResponseDTO updateContact(Long id, ContactNewRequestDTO contactNewRequestDTO) {
 		ContactNewEntity contactEntityFound = contactNewRepository.findById(id)
 				.orElseThrow(() -> new RuntimeException("Contact not found"));
 		ContactNewEntity updatedContactEntity = updateContactNewRequestDTOToContactNewEntity(contactEntityFound,
@@ -107,7 +103,7 @@ public class ContactNewServiceImpl implements ContactNewService {
 
 	@Override
 	@Transactional
-	public void deleteContact(Integer id) {
+	public void deleteContact(Long id) {
 		ContactNewEntity contactEntityFound = contactNewRepository.findById(id)
 				.orElseThrow(() -> new RuntimeException("Contact not found"));
 		contactNewRepository.delete(contactEntityFound);
@@ -196,13 +192,6 @@ public class ContactNewServiceImpl implements ContactNewService {
 		contactNewEntity.setUpdatedBy(contactNewRequestDTO.getUpdatedBy());
 		contactNewEntity.setFormId(contactNewRequestDTO.getFormId());
 		return contactNewRepository.save(contactNewEntity);
-	}
-
-	private Integer getUserId() {
-		String email = JwtUtil.getEmailFromContext();
-		HttpResponse userResponse = userAPIClient.getUserByEmail(email);
-		UserResponseDTO userData = MappingUtil.mapClientBodyToClass(userResponse.getData(), UserResponseDTO.class);
-		return (userData.getId().intValue());
 	}
 
 }

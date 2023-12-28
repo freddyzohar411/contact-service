@@ -6,7 +6,7 @@ import com.avensys.rts.contactservice.payloadnewrequest.FormSubmissionsRequestDT
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
-@FeignClient(name = "form-service", url = "http://localhost:9400", configuration = JwtTokenInterceptor.class)
+@FeignClient(name = "form-service", url = "${api.form-submission.url}", configuration = JwtTokenInterceptor.class)
 public interface FormSubmissionAPIClient {
 
 	@PostMapping("/form-submissions")

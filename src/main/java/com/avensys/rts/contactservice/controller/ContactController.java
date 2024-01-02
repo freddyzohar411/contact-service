@@ -18,9 +18,9 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.avensys.rts.contactservice.constant.MessageConstants;
-import com.avensys.rts.contactservice.payloadnewrequest.ContactNewRequestDTO;
-import com.avensys.rts.contactservice.payloadnewresponse.ContactNewResponseDTO;
-import com.avensys.rts.contactservice.service.ContactNewServiceImpl;
+import com.avensys.rts.contactservice.payloadnewrequest.ContactRequestDTO;
+import com.avensys.rts.contactservice.payloadnewresponse.ContactResponseDTO;
+import com.avensys.rts.contactservice.service.ContactServiceImpl;
 import com.avensys.rts.contactservice.util.JwtUtil;
 import com.avensys.rts.contactservice.util.ResponseUtil;
 
@@ -28,28 +28,28 @@ import jakarta.validation.Valid;
 
 @RestController
 @CrossOrigin(origins = "*", allowedHeaders = "*")
-public class ContactNewController {
+public class ContactController {
 
-	private final Logger log = LoggerFactory.getLogger(ContactNewController.class);
-	private final ContactNewServiceImpl contactService;
+	private final Logger log = LoggerFactory.getLogger(ContactController.class);
+	private final ContactServiceImpl contactService;
 	private final MessageSource messageSource;
 
 	@Autowired
 	private JwtUtil jwtUtil;
 
-	public ContactNewController(ContactNewServiceImpl contactService, MessageSource messageSource) {
+	public ContactController(ContactServiceImpl contactService, MessageSource messageSource) {
 		this.contactService = contactService;
 		this.messageSource = messageSource;
 	}
 
 	@PostMapping("/contacts")
-	public ResponseEntity<Object> createContact(@Valid @RequestBody ContactNewRequestDTO contactRequest,
+	public ResponseEntity<Object> createContact(@Valid @RequestBody ContactRequestDTO contactRequest,
 			@RequestHeader(name = "Authorization") String token) {
 		log.info("Create a contact : Controller ");
 		Long userId = jwtUtil.getUserId(token);
 		contactRequest.setCreatedBy(userId);
 		contactRequest.setUpdatedBy(userId);
-		ContactNewResponseDTO createdContact = contactService.createContact(contactRequest);
+		ContactResponseDTO createdContact = contactService.createContact(contactRequest);
 		return ResponseUtil.generateSuccessResponse(createdContact, HttpStatus.CREATED,
 				messageSource.getMessage(MessageConstants.MESSAGE_CREATED, null, LocaleContextHolder.getLocale()));
 	}
@@ -73,12 +73,12 @@ public class ContactNewController {
 
 	@PutMapping("/contacts/{id}")
 	public ResponseEntity<Object> updateContact(@PathVariable Long id,
-			@Valid @RequestBody ContactNewRequestDTO contactRequest,
+			@Valid @RequestBody ContactRequestDTO contactRequest,
 			@RequestHeader(name = "Authorization") String token) {
 		log.info("Update contact : Controller ");
 		Long userId = jwtUtil.getUserId(token);
 		contactRequest.setUpdatedBy(userId);
-		ContactNewResponseDTO updatedContact = contactService.updateContact(id, contactRequest);
+		ContactResponseDTO updatedContact = contactService.updateContact(id, contactRequest);
 		return ResponseUtil.generateSuccessResponse(updatedContact, HttpStatus.OK,
 				messageSource.getMessage(MessageConstants.MESSAGE_SUCCESS, null, LocaleContextHolder.getLocale()));
 	}

@@ -16,8 +16,8 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "contact_new")
-public class ContactNewEntity extends BaseEntity {
+@Table(name = "contact")
+public class ContactEntity extends BaseEntity {
 
 	private static final long serialVersionUID = 4539091506101115672L;
 

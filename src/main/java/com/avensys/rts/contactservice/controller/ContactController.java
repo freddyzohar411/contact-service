@@ -35,7 +35,7 @@ public class ContactController {
 		this.messageSource = messageSource;
 	}
 
-	@PostMapping("")
+	@PostMapping("/add")
 	public ResponseEntity<Object> createContact(@Valid @RequestBody ContactRequestDTO contactRequest,
 			@RequestHeader(name = "Authorization") String token) {
 		log.info("Create a contact : Controller ");

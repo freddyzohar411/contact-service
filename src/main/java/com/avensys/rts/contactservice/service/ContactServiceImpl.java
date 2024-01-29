@@ -111,8 +111,7 @@ public class ContactServiceImpl implements ContactService {
 
 	@Override
 	public List<ContactResponseDTO> getContactsByEntityTypeAndEntityId(String entityType, Integer entityId) {
-		List<ContactEntity> contactEntityList = contactRepository.findByEntityTypeAndEntityId(entityType,
-				entityId);
+		List<ContactEntity> contactEntityList = contactRepository.findByEntityTypeAndEntityId(entityType, entityId);
 		List<ContactResponseDTO> contactResponseDTOList = contactEntityList.stream()
 				.map(this::contactNewEntityToContactNewResponseDTO).toList();
 		return contactResponseDTOList;
@@ -121,8 +120,7 @@ public class ContactServiceImpl implements ContactService {
 	@Override
 	@Transactional
 	public void deleteContactsByEntityTypeAndEntityId(String entityType, Integer entityId) {
-		List<ContactEntity> contactEntityList = contactRepository.findByEntityTypeAndEntityId(entityType,
-				entityId);
+		List<ContactEntity> contactEntityList = contactRepository.findByEntityTypeAndEntityId(entityType, entityId);
 		if (!contactEntityList.isEmpty()) {
 			// Delete each contact form submission before deleting
 			contactEntityList.forEach(contactEntity -> {
@@ -160,12 +158,14 @@ public class ContactServiceImpl implements ContactService {
 		}
 
 		// Get form submission data
-		HttpResponse formSubmissionResponse = formSubmissionAPIClient
-				.getFormSubmission(contactEntity.getFormSubmissionId());
-		FormSubmissionsResponseDTO formSubmissionData = MappingUtil
-				.mapClientBodyToClass(formSubmissionResponse.getData(), FormSubmissionsResponseDTO.class);
-		contactResponseDTO
-				.setSubmissionData(MappingUtil.convertJsonNodeToJSONString(formSubmissionData.getSubmissionData()));
+		if (contactEntity.getFormSubmissionId() != null) {
+			HttpResponse formSubmissionResponse = formSubmissionAPIClient
+					.getFormSubmission(contactEntity.getFormSubmissionId());
+			FormSubmissionsResponseDTO formSubmissionData = MappingUtil
+					.mapClientBodyToClass(formSubmissionResponse.getData(), FormSubmissionsResponseDTO.class);
+			contactResponseDTO
+					.setSubmissionData(MappingUtil.convertJsonNodeToJSONString(formSubmissionData.getSubmissionData()));
+		}
 		return contactResponseDTO;
 	}
 
